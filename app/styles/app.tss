@@ -1,0 +1,8 @@
+
+'Window': {
+	theme: 'AppTheme'
+}
+
+'ActionBar[platform=android]': {
+	displayHomeAsUp : true
+}

@@ -1,0 +1,5 @@
+build
+.DS_STORE
+modules
+/platform
+/i18n

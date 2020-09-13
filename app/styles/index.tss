@@ -1,0 +1,24 @@
+"MenuItem": {
+    showAsAction: Ti.Android.SHOW_AS_ACTION_NEVER
+}
+
+"ScrollView": {
+    top: 16,
+    bottom: 16,
+    height: Ti.UI.FILL,
+    scrollType: 'vertical',
+    layout: "vertical",
+    backgroundColor: '#e6cdc1'
+}
+
+"Button": {
+    width: '45%',
+    color: "white"
+}
+
+"#logs": {
+    left: 12,
+    right: 12,
+    color: "black",
+    textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+}

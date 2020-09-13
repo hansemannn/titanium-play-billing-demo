@@ -1,0 +1,20 @@
+<Alloy>
+	<Window title="Play Billing Demo" layout="vertical" onOpen="onWindowOpen">
+		<Menu>
+			<MenuItem title="Query Local Purchases" onClick="queryPurchase" />
+			<MenuItem title="Fetch Remote Purchases" onClick="fetchPurchase" />
+			<MenuItem title="Connect" onClick="onWindowOpen" />
+			<MenuItem title="Disconnect" onClick="disconnect" />
+			<MenuItem title="Copy Logs to Clipboard" onClick="copyLogs" />
+			<MenuItem title="Clear Logs" onClick="clearLogs" />
+		</Menu>
+
+		<Label top='10' color="black" backgroundColor="yellow" text="Your App (Pro) Test: EUR 6.49" />
+
+		<Button top='20' title="  Buy Item  " onClick='buyProduct' />
+
+		<ScrollView id="scroll">
+			<Label id="logs" />
+		</ScrollView>
+	</Window>
+</Alloy>
