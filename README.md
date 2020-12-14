@@ -2,6 +2,9 @@
 
 This is a detailed guide on how to leverage [Google Play's Billing Library (GPBL)](https://developer.android.com/google/play/billing) using the Titanium Android module.
 
+Looking for iOS? Ti.StoreKit has been rewritten as well, for example with pending transactions handling, better receipt-validation and redemption codes.
+See `Get the module` for ways to contact.
+
 **⚠️ [Must read for server handling before using this module](https://developer.android.com/google/play/billing/security#verify)**
 
 ### Requirements
