@@ -30,8 +30,8 @@ Before calling any method on module, make sure to call `initialize()` which will
 ```js
 let isBillingInitialized = false;
 
-IAP.addEventListener('connectionUpdate', function (e) {
-    isBillingInitialized = e.success;
+IAP.addEventListener('connectionUpdate', event => {
+    isBillingInitialized = event.success;
 });
 
 IAP.initialize();
@@ -78,7 +78,7 @@ CODE_SKU_NOT_AVAILABLE                  // "SKU details not available for making
 ```js
 // this method also tells whether the in-app purchases are supported and ready to make purchases
 // or to know the statuses of past purchases
-const isBillingReady =  IAP.isReady();
+const isBillingReady = IAP.isReady();
 ```
 Note: Some Android devices might have an older version of the Google Play Store app that doesn't support certain products types, such as subscriptions. Before your app enters the billing flow, you can call isFeatureSupported() to determine whether the device supports the products you want to sell:
 ```js
@@ -127,7 +127,7 @@ Calling purchase method will launch the purchase dialog with relevant product in
 const purchaseDialogLaunchCode = IAP.purchase(PRODUCT_ID);
 
 // handle further if launch-code is not ok
-if (purchaseDialogLaunchCode != IAP.CODE_OK) {
+if (purchaseDialogLaunchCode !== IAP.CODE_OK) {
     // check response codes in constants section for relevant messages
 }
 ```
@@ -142,7 +142,7 @@ if (purchaseDialogLaunchCode != IAP.CODE_OK) {
 
 ```js
 // Register this listener before making purchases
-IAP.addEventListener('purchaseUpdate', function (e) {
+IAP.addEventListener('purchaseUpdate', event => {
 /*
     {
        "success": true,
@@ -167,12 +167,12 @@ IAP.addEventListener('purchaseUpdate', function (e) {
     }
 */
 
-    if (e.success) {
+    if (event.success) {
         // e.purchaseList contains the purchase data represented above
         // check the purchase state and acknowledge product to finally give it to user;
-        acknowledgePurchase(e.purchaseList[0]);
+        acknowledgePurchase(event.purchaseList[0]);
     } else {
-        alert(e.code);
+        alert(event.code);
     }
 });
 
@@ -181,20 +181,20 @@ IAP.addEventListener('purchaseUpdate', function (e) {
 2. Use `queryPurchases` method every time the app is launched to know the status of any purchase made outside the app or in killed state. [Read more about this method here](https://developer.android.com/reference/com/android/billingclient/api/BillingClient#querypurchases)
 
 ```js
-const e = IAP.queryPurchases({productType: IAP.SKU_TYPE_INAPP});
+const result = IAP.queryPurchases({ productType: IAP.SKU_TYPE_INAPP });
 
 // the response parameters are exactly same as in event listener `purchaseUpdate`
-processQueriedPurchaseResponse(e);
+processQueriedPurchaseResponse(result);
 
-function processQueriedPurchaseResponse(e) {
-    if (e.success) {
-        if (e.purchaseList.length > 0) {
-            for (purchaseDetails of e.purchaseList) {
+function processQueriedPurchaseResponse(result) {
+    if (result.success) {
+        if (result.purchaseList.length > 0) {
+            for (purchaseDetails of result.purchaseList) {
                 acknowledgePurchase(purchaseDetails);
             }
         }
     } else {
-        alert(e.code);
+        alert(result.code);
     }
 }
 ```
@@ -205,6 +205,7 @@ Once the purchase is made, it's mandatory to acknowledge it so Google Play can m
 
 - If the product was consumable, call `acknowledgeConsumableProduct()`
 - If the product was non-consumable, call `acknowledgeNonConsumableProduct()`
+
 ```js
 function acknowledgePurchase(purchaseDetails) {
     if (purchaseDetails.purchaseState === IAP.PURCHASE_STATE_PURCHASED) {
@@ -212,8 +213,8 @@ function acknowledgePurchase(purchaseDetails) {
             // use `acknowledgeNonConsumableProduct` method if item is non-consumable
             IAP.acknowledgeConsumableProduct({
                 purchaseToken: purchaseDetails.purchaseToken,
-                callback: function (e) {
-                    e.success ? alert('purchase was successful and product delivered to user') : alert(e.code);
+                callback: event => {
+                    event.success ? alert('purchase was successful and product delivered to user') : alert(event.code);
                 }
             });
         } else {
