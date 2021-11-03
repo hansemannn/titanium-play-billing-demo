@@ -227,7 +227,7 @@ function acknowledgePurchase(purchaseDetails) {
 
 ### Additional methods
 
-- **queryPurchaseHistoryAsync** : to know the purchase details of successful purchases from Google server
+- **queryPurchaseHistoryAsync**: To know the purchase details of successful purchases from Google server
 
 ```js
 IAP.queryPurchaseHistoryAsync({
@@ -236,9 +236,19 @@ IAP.queryPurchaseHistoryAsync({
 });
 ```
 
-- **disconnect** : method to call when entire billing flow is done to release resources
+- **disconnect**: Method to call when entire billing flow is done to release resources
 ```js
 IAP.disconnect();
+```
+
+- **launchPriceChangeConfirmationFlow**: Launch a price change
+```js
+IAP.launchPriceChangeConfirmationFlow({
+    productId: 'test_id_0001',
+    callback: ({ success }) => {
+        // ...
+    }
+});
 ```
 
 ## License
