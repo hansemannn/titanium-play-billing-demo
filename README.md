@@ -1,6 +1,6 @@
 # Titanium Android: Google Play Billing v3
 
-This module is a rewritten version of the (oudated) [Titanium InAppBilling Module](https://github.com/appcelerator-archive/ti.inappbilling) module
+This module is a rewritten version of the (outdated) [Titanium InAppBilling Module](https://github.com/appcelerator-archive/ti.inappbilling) module
 and uses the [Google Play Billing v3 (GPBL)](https://developer.android.com/google/play/billing) moduke in Titanium Android. The currently used Billing Library version is `3.0.3` (latest available, `v4` is already in progress). It can be uploaded to Google Play without issues and is updated frequently! 
 
 Looking for iOS? Ti.StoreKit, the in-app-purchase module for iOS, has been rewritten as well, for example with pending transactions handling,
