@@ -1,11 +1,10 @@
 # Titanium Android: Google Play Billing v3
 
-This is a detailed guide on how to leverage the [Google Play Billing Library version 3 (GPBL)](https://developer.android.com/google/play/billing) using the Titanium Android module. The currently used Billing Library version is `3.0.3` (latest available, `v4` is already in progress).
+This module is a rewritten version of the (oudated) [Titanium InAppBilling Module](https://github.com/appcelerator-archive/ti.inappbilling) module
+and uses the [Google Play Billing v3 (GPBL)](https://developer.android.com/google/play/billing) moduke in Titanium Android. The currently used Billing Library version is `3.0.3` (latest available, `v4` is already in progress). It can be uploaded to Google Play without issues and is updated frequently! 
 
 Looking for iOS? Ti.StoreKit, the in-app-purchase module for iOS, has been rewritten as well, for example with pending transactions handling,
 better receipt-validation and redemption codes. See [`Get the module`](#get-the-module) for ways to contact.
-
-**⚠️ [Must read for server handling before using this module](https://developer.android.com/google/play/billing/security#verify)**
 
 ### Requirements
 
@@ -224,6 +223,10 @@ function acknowledgePurchase(purchaseDetails) {
     }
 }
 ```
+
+### Security
+
+[Must read regarding the server handling of this module](https://developer.android.com/google/play/billing/security#verify)**
 
 ### Additional methods
 
