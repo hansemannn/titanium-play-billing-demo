@@ -1,7 +1,7 @@
-# Titanium Android: Google Play Billing v3
+# Titanium Android: Google Play Billing v5
 
 This module is a rewritten version of the (outdated) [Titanium InAppBilling Module](https://github.com/appcelerator-archive/ti.inappbilling) module
-and uses the [Google Play Billing v3 (GPBL)](https://developer.android.com/google/play/billing) moduke in Titanium Android. The currently used Billing Library version is `3.0.3` (latest available, `v4` is already in progress). It can be uploaded to Google Play without issues and is updated frequently! 
+and uses the [Google Play Billing v5](https://developer.android.com/google/play/billing) moduke in Titanium Android. The currently used Billing Library version is `5.0.0` (latest available, recommended by Google). It can be uploaded to Google Play without issues and is updated frequently! 
 
 Looking for iOS? Ti.StoreKit, the in-app-purchase module for iOS, has been rewritten as well, for example with pending transactions handling,
 better receipt-validation and redemption codes. See [`Get the module`](#get-the-module) for ways to contact.
@@ -23,7 +23,8 @@ import IAP from 'ti.iap';
  
 ### Initialization
 
-Before calling any method on module, make sure to call `initialize()` which will respond through an event `connectionUpdate` to report whether the GPBL is connected for further actions:
+Before calling any method on module, make sure to call `initialize()` which will respond through an event `connectionUpdate` to report whether the
+library client is connected for further actions:
 
 ```js
 let isBillingInitialized = false;
@@ -39,10 +40,8 @@ IAP.initialize();
 
 ```js
 /* Check for supported features in `isFeatureSupported(…)` method */
-FEATURE_TYPE_IN_APP_ITEMS_ON_VR         // Purchase/query for in-app items on VR
 FEATURE_TYPE_PRICE_CHANGE_CONFIRMATION  // Launch a price change confirmation flow
 FEATURE_TYPE_SUBSCRIPTIONS              // Purchase/query for subscriptions
-FEATURE_TYPE_SUBSCRIPTIONS_ON_VR        // Purchase/query for subscriptions on VR
 FEATURE_TYPE_SUBSCRIPTIONS_UPDATE       // Subscriptions update/replace
 
 /* Product type constants */
@@ -71,7 +70,7 @@ CODE_BILLING_NOT_READY                  // "Billing library not ready"
 CODE_SKU_NOT_AVAILABLE                  // "SKU details not available for making purchase"
 ```
 
-### Check whether the GPBL is finally ready to make purchases and other calls
+### Check whether the Google Play Billing library is finally ready to make purchases and other calls
 
 ```js
 // this method also tells whether the in-app purchases are supported and ready to make purchases
@@ -179,7 +178,10 @@ IAP.addEventListener('purchaseUpdate', event => {
 2. Use `queryPurchases` method every time the app is launched to know the status of any purchase made outside the app or in killed state. [Read more about this method here](https://developer.android.com/reference/com/android/billingclient/api/BillingClient#querypurchases)
 
 ```js
-const result = IAP.queryPurchases({ productType: IAP.SKU_TYPE_INAPP });
+const result = IAP.queryPurchases({
+  productType: IAP.SKU_TYPE_INAPP,
+  callback: processQueriedPurchaseResponse
+});
 
 // the response parameters are exactly same as in event listener `purchaseUpdate`
 processQueriedPurchaseResponse(result);
@@ -230,12 +232,12 @@ function acknowledgePurchase(purchaseDetails) {
 
 ### Additional methods
 
-- **queryPurchaseHistoryAsync**: To know the purchase details of successful purchases from Google server
+- **showInAppMessages**: To automatically display an in app message when a subscription is on hold and a payment update is required
 
 ```js
-IAP.queryPurchaseHistoryAsync({
-    productType: IAP.SKU_TYPE_INAPP,
-    callback: processQueriedPurchaseResponse	// implementation in `queryPurchases` section
+IAP.showInAppMessages(event => {
+  console.warn(event.code); // 0 = NO_ACTION_NEEDED, 1 = SUBSCRIPTION_STATUS_UPDATED
+  console.warn(event.purchaseToken); // Included if event.code === 1
 });
 ```
 
